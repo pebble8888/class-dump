@@ -187,7 +187,7 @@
     return category;
 }
 
-- (void)readClassAtAddress:(uint64_t)address objc2Class:(struct cd_objc2_class *)objc2ClassPtr objc2ClassData:(struct cd_objc2_class_ro_t *)objc2ClassDataPtr;
+- (BOOL)readClassAtAddress:(uint64_t)address objc2Class:(struct cd_objc2_class *)objc2ClassPtr objc2ClassData:(struct cd_objc2_class_ro_t *)objc2ClassDataPtr;
 {
     CDMachOFileDataCursor *cursor = [[CDMachOFileDataCursor alloc] initWithFile:self.machOFile address:address];
     NSParameterAssert([cursor offset] != 0);
@@ -197,14 +197,14 @@
     objc2Class.superclass = [cursor readPtr];
     objc2Class.cache      = [cursor readPtr];
     objc2Class.vtable     = [cursor readPtr];
-
-    uint64_t value        = [cursor readPtr];
-    class.isSwiftClass    = (value & 0x1) != 0;
-    objc2Class.data       = value & ~7;
+    objc2Class.data       = [cursor readPtr];
 
     objc2Class.reserved1  = [cursor readPtr];
     objc2Class.reserved2  = [cursor readPtr];
     objc2Class.reserved3  = [cursor readPtr];
+    
+    BOOL isSwiftClass = objc2Class.data & (uint64_t)1;
+    objc2Class.data &= ~(uint64_t)1;
     
     NSParameterAssert(objc2Class.data != 0);
     [cursor setAddress:objc2Class.data];
@@ -231,6 +231,8 @@
     
     if (objc2ClassDataPtr)
         memcpy(objc2ClassDataPtr, &objc2ClassData, sizeof(objc2ClassData));
+    
+    return isSwiftClass;
 }
 
 - (CDOCClass *)loadClassAtAddress:(uint64_t)address;
