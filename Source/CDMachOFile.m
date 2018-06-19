@@ -164,7 +164,7 @@ static NSString *CDMachOFileMagicNumberDescription(uint32_t magic)
                 [runPathCommands addObject:loadCommand];
             }
         }
-        //NSLog(@"loadCommand: %@", loadCommand);
+        NSLog(@"loadCommand: %@", loadCommand);
     }
     _loadCommands      = [loadCommands copy];
     _dylibLoadCommands = [dylibLoadCommands copy];
@@ -283,8 +283,13 @@ static NSString *CDMachOFileMagicNumberDescription(uint32_t magic)
 - (CDLCSegment *)segmentWithName:(NSString *)segmentName;
 {
     for (id loadCommand in _loadCommands) {
-        if ([loadCommand isKindOfClass:[CDLCSegment class]] && [[loadCommand name] isEqual:segmentName]) {
-            return loadCommand;
+        NSLog(@"loadCommand %@", loadCommand);
+        if ([loadCommand isKindOfClass:[CDLCSegment class]]) {
+            NSString* name = [loadCommand name];
+            NSLog(@"name %@", name);
+            if ([name isEqual:segmentName]) {
+                return loadCommand;
+            }
         }
     }
 
@@ -356,15 +361,13 @@ static NSString *CDMachOFileMagicNumberDescription(uint32_t magic)
         exit(5);
     }
 
-#if 0
     NSLog(@"---------->");
     NSLog(@"segment is: %@", segment);
     NSLog(@"address: 0x%08x", address);
-    NSLog(@"CDFile offset:    0x%08x", offset);
+    //NSLog(@"CDFile offset:    0x%08x", offset);
     NSLog(@"file off for address: 0x%08x", [segment fileOffsetForAddress:address]);
-    NSLog(@"data offset:      0x%08x", offset + [segment fileOffsetForAddress:address]);
+    //NSLog(@"data offset:      0x%08x", offset + [segment fileOffsetForAddress:address]);
     NSLog(@"<----------");
-#endif
     return [segment fileOffsetForAddress:address];
 }
 

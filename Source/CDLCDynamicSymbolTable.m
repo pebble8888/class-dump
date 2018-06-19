@@ -88,22 +88,23 @@
     
     CDMachOFileDataCursor *cursor = [[CDMachOFileDataCursor alloc] initWithFile:self.machOFile offset:_dysymtab.extreloff];
 
-    //NSLog(@"indirectsymoff: %lu", dysymtab.indirectsymoff);
-    //NSLog(@"nindirectsyms:  %lu", dysymtab.nindirectsyms);
+    NSLog(@"indirectsymoff: %lu", _dysymtab.indirectsymoff);
+    NSLog(@"nindirectsyms:  %lu", _dysymtab.nindirectsyms);
+    
 #if 0
-    [cursor setOffset:[self.machOFile offset] + dysymtab.indirectsymoff];
-    for (uint32_t index = 0; index < dysymtab.nindirectsyms; index++) {
+    [cursor setOffset:[self.machOFile offset] + _dysymtab.indirectsymoff];
+    for (uint32_t index = 0; index < _dysymtab.nindirectsyms; index++) {
         // From loader.h: An indirect symbol table entry is simply a 32bit index into the symbol table to the symbol that the pointer or stub is referring to.
         uint32_t val = [cursor readInt32];
         NSLog(@"%3u: %08x (%u)", index, val, val);
     }
 #endif
 
-    //NSLog(@"extreloff: %lu", dysymtab.extreloff);
-    //NSLog(@"nextrel:   %lu", dysymtab.nextrel);
+    NSLog(@"extreloff: %lu", _dysymtab.extreloff);
+    NSLog(@"nextrel:   %lu", _dysymtab.nextrel);
 
-    //NSLog(@"     address   val       symbolnum  pcrel  len  ext  type");
-    //NSLog(@"---  --------  --------  ---------  -----  ---  ---  ----");
+    NSLog(@"     address   val       symbolnum  pcrel  len  ext  type");
+    NSLog(@"---  --------  --------  ---------  -----  ---  ---  ----");
     for (uint32_t index = 0; index < _dysymtab.nextrel; index++) {
         struct relocation_info rinfo;
 
@@ -115,7 +116,7 @@
         rinfo.r_length    = (val & 0x06000000) >> 25;
         rinfo.r_extern    = (val & 0x08000000) >> 27;
         rinfo.r_type      = (val & 0xf0000000) >> 28;
-#if 0
+#if 1
         NSLog(@"%3d: %08x  %08x   %08x      %01x    %01x    %01x     %01x", index, rinfo.r_address, val,
               rinfo.r_symbolnum, rinfo.r_pcrel, rinfo.r_length, rinfo.r_extern, rinfo.r_type);
 #endif
@@ -124,7 +125,7 @@
         [externalRelocationEntries addObject:ri];
     }
 
-    //NSLog(@"externalRelocationEntries: %@", externalRelocationEntries);
+    NSLog(@"externalRelocationEntries: %@", externalRelocationEntries);
 
     // r_address is purported to be the offset from the vmaddr of the first segment, but...
     // It seems to be from the first segment with r/w initprot.

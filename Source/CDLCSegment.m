@@ -167,7 +167,9 @@ NSString *CDSegmentEncryptionTypeName(CDSegmentEncryptionType type)
 - (CDSection *)sectionWithName:(NSString *)name;
 {
     for (CDSection *section in self.sections) {
-        if ([[section sectionName] isEqual:name])
+        NSString* name = [section sectionName];
+        NSLog(@"section name:%@", name);
+        if ([name isEqual:name])
             return section;
     }
 

@@ -88,7 +88,7 @@
             CDLCSegment *segment = (CDLCSegment *)loadCommand;
 
             if (([segment initprot] & CD_VM_PROT_RW) == CD_VM_PROT_RW) {
-                //NSLog(@"segment... initprot = %08x, addr= %016lx *** r/w", [segment initprot], [segment vmaddr]);
+                NSLog(@"segment... initprot = %08x, addr= %016lx *** r/w", [segment initprot], [segment vmaddr]);
                 _baseAddress = [segment vmaddr];
                 _flags.didFindBaseAddress = YES;
                 break;
@@ -100,16 +100,16 @@
     NSMutableDictionary *classSymbols = [[NSMutableDictionary alloc] init];
 
     CDMachOFileDataCursor *cursor = [[CDMachOFileDataCursor alloc] initWithFile:self.machOFile offset:_symtabCommand.symoff];
-    //NSLog(@"offset= %lu", [cursor offset]);
-    //NSLog(@"stroff=  %lu", symtabCommand.stroff);
-    //NSLog(@"strsize= %lu", symtabCommand.strsize);
+    NSLog(@"offset= %lu", [cursor offset]);
+    NSLog(@"stroff=  %lu", _symtabCommand.stroff);
+    NSLog(@"strsize= %lu", _symtabCommand.strsize);
 
     const char *strtab = (char *)[self.machOFile.data bytes] + _symtabCommand.stroff;
 
     if (![self.machOFile uses64BitABI]) {
-        //NSLog(@"32 bit...");
-        //NSLog(@"       str table index  type  sect  desc  value");
-        //NSLog(@"       ---------------  ----  ----  ----  --------");
+        NSLog(@"32 bit...");
+        NSLog(@"       str table index  type  sect  desc  value");
+        NSLog(@"       ---------------  ----  ----  ----  --------");
         for (uint32_t index = 0; index < _symtabCommand.nsyms; index++) {
             struct nlist nlist;
 
@@ -135,10 +135,10 @@
             }
         }
 
-        //NSLog(@"Loaded %lu 32-bit symbols", [symbols count]);
+        NSLog(@"Loaded %lu 32-bit symbols", [symbols count]);
     } else {
-        //NSLog(@"       str table index  type  sect  desc  value");
-        //NSLog(@"       ---------------  ----  ----  ----  ----------------");
+        NSLog(@"       str table index  type  sect  desc  value");
+        NSLog(@"       ---------------  ----  ----  ----  ----------------");
         for (uint32_t index = 0; index < _symtabCommand.nsyms; index++) {
             struct nlist_64 nlist;
 
@@ -147,7 +147,7 @@
             nlist.n_sect      = [cursor readByte];
             nlist.n_desc      = [cursor readInt16];
             nlist.n_value     = [cursor readInt64];
-#if 0
+#if 1
             NSLog(@"%5u: %08x           %02x    %02x  %04x  %016x - %s",
                   index, nlist.n_un.n_strx, nlist.n_type, nlist.n_sect, nlist.n_desc, nlist.n_value, strtab + nlist.n_un.n_strx);
 #endif
@@ -163,13 +163,13 @@
             }
         }
 
-        //NSLog(@"Loaded %lu 64-bit symbols", [symbols count]);
+        NSLog(@"Loaded %lu 64-bit symbols", [symbols count]);
     }
     
     _symbols = [symbols copy];
     _classSymbols = [classSymbols copy];
 
-    //NSLog(@"symbols: %@", _symbols);
+    NSLog(@"symbols: %@", _symbols);
 }
 
 - (uint32_t)symoff;

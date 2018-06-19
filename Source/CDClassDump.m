@@ -116,9 +116,9 @@ NSString *CDErrorKey_Exception    = @"CDErrorKey_Exception";
 
 - (BOOL)loadFile:(CDFile *)file error:(NSError *__autoreleasing *)error;
 {
-    //NSLog(@"targetArch: (%08x, %08x)", targetArch.cputype, targetArch.cpusubtype);
+    NSLog(@"targetArch: (%08x, %08x)", _targetArch.cputype, _targetArch.cpusubtype);
     CDMachOFile *machOFile = [file machOFileWithArch:_targetArch];
-    //NSLog(@"machOFile: %@", machOFile);
+    NSLog(@"machOFile: %@", machOFile);
     if (machOFile == nil) {
         if (error != NULL) {
             NSString *failureReason;
