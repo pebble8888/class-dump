@@ -60,7 +60,7 @@ License
 
 This file is part of class-dump, a utility for examining the
 Objective-C segment of Mach-O files.
-Copyright (C) 1997-2019 Steve Nygard.
+Copyright (C) 1997-2019 Annimaster.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
