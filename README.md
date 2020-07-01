@@ -12,7 +12,7 @@ The latest version and information is available at:
 
 The source code is also available from my Github repository at:
 
-    https://github.com/nygard/class-dump
+    https://github.com/Anita713/class-dump
 
 Usage
 -----
@@ -80,4 +80,6 @@ Contact.
 -------
 
 You may contact the author by:
-   e-mail:  nygard at gmail.com
+   e-mail:  Annimaster71@protonmail.com
+U
+mail.com
