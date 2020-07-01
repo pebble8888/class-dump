@@ -12,7 +12,7 @@ The latest version and information is available at:
 
 The source code is also available from my Github repository at:
 
-    https://github.com/nygard/class-dump
+    https://github.com/Anita713/class-dump
 
 Usage
 -----
@@ -60,7 +60,7 @@ License
 
 This file is part of class-dump, a utility for examining the
 Objective-C segment of Mach-O files.
-Copyright (C) 1997-2019 Steve Nygard.
+Copyright (C) 1997-2019 Annimaster.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -76,8 +76,10 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-Contact
+Contact.
 -------
 
 You may contact the author by:
-   e-mail:  nygard at gmail.com
+   e-mail:  Annimaster713@protonmail.com
+U
+mail.com
