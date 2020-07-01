@@ -6,4 +6,4 @@
     #import <Foundation/Foundation.h>
     #import "CDExtensions.h"
     #define __cmd __PRETTY_FUNCTION__
-#endif
+#endif.
